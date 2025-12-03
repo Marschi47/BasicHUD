@@ -23,11 +23,11 @@ public class HudRenderer {
         int ping = getPlayerPing(mc);
         // display only in multiplayer
         if (ping > 0) {
-            fr.drawStringWithShadow("Ping: " + ping + "ms", 10, 22, 0x00FFFF);
+            fr.drawStringWithShadow("Ping: " + ping + "ms", 10, 22, 0xFFFFFF);
         }
 
         // --- CPS ---
-        fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps, 10, 34, 0xFF55FF);
+        fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps, 10, 34, 0xFFFFFF);
     }
 
     // Helper method to get ping
@@ -40,7 +40,7 @@ public class HudRenderer {
                     return connection.getPlayerInfo(mc.thePlayer.getUniqueID()).getResponseTime();
                 }
             } catch (Exception e) {
-                // if data is not loaded then ignore the exception that gets thrown
+                // ignore
             }
         }
         return 0;
