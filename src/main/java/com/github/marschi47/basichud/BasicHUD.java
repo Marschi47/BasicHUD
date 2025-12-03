@@ -2,6 +2,8 @@ package com.github.marschi47.basichud;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.Blocks;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
@@ -9,8 +11,11 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 public class BasicHUD {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        System.out.println("Dirt: " + Blocks.dirt.getUnlocalizedName());
-		// Below is a demonstration of an access-transformed class access.
-        System.out.println("Color State: " + new GlStateManager.Color());
+        MinecraftForge.EVENT_BUS.register(new HudRenderer());
+
+        //CPS Tracker
+        CpsTracker tracker = new CpsTracker();
+        MinecraftForge.EVENT_BUS.register(tracker); // mouse input
+        FMLCommonHandler.instance().bus().register(tracker); // client ticks
     }
 }
