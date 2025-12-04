@@ -1,43 +1,37 @@
-# Architectury Loom based template for 1.8.9 forge mods
+![BasicHUD Logo](src/main/resources/BasicHUD.png)
+# BasicHUD
 
-**For other templates, do check out the [other branches of this repository](https://github.com/romangraef/Forge1.8.9Template/branches/all)**
+**BasicHUD** is a lightweight Forge mod for Minecraft 1.8.9 that displays basic information on screen.
+
+## Features
+
+* **Stats Display:** Real-time FPS, Ping, and CPS.
+* **Customization:** Fully configurable position and text colors.
+* **GUI:** Built-in config menu for easy adjustments.
+
+## Installation
+
+1.  Download the latest `.jar` from the **[Releases](https://github.com/Marschi47/BasicHUD/releases)** tab.
+2.  Make sure you have **Minecraft Forge 1.8.9** installed.
+3.  Drop the file into your `.minecraft/mods` folder.
 
 ## Usage
 
-Check out https://moddev.nea.moe/ for a full tutorial on legacy modding.
+* The HUD appears automatically when you join a world or server.
+* **To edit settings:** Open the Forge Mod menu and access the config menu through the config button.
 
-Alternatively, read here for a basic overview on how to use this repository.
+## Building from Source
 
-To get started, [Use this template](https://github.com/new?template_name=Forge1.8.9Template&template_owner=nea89o).
+If you want to compile the mod yourself:
 
-> [!WARNING]
-> Do not Fork or Clone or Download ZIP this template. If you "use" this template a custom mod id will be generated. You can do that manually using the `make-my-own` script, if you are on linux. If not, just click the use this template button. If you want to use kotlin or make a 1.12 mod check the "Include all branches" and change the default branch in https://github.com/yourname/yourreponame/branches
+1.  Clone this repository.
+2.  Run the build command:
+    ```bash
+    ./gradlew build
+    ```
+3.  The output file will be in `build/libs`.
 
-This project uses [DevAuth](https://github.com/DJtheRedstoner/DevAuth) per default, so you can log in using your real
-minecraft account. If you don't need that, you can remove it from the buildscript.
+## Credits
 
-To run the mod you will need two JDKs, one Java 17 jdk and one Java 1.8 jdk. You can download those
-from [here](https://adoptium.net/temurin/releases) (or use your own downloads).
-
-When you import your project into IntelliJ, you need to set the gradle jvm to the Java 17 JDK in the gradle tab, and the
-Project SDK to the Java 1.8 JDK. Then click on the sync button in IntelliJ, and it should create a run task
-called `Minecraft Client`. If it doesn't then try relaunching your IntelliJ. **Warning for Mac users**: You might have to remove the `-XStartOnFirstThread` vm argument from your run configuration. In the future, that should be handled by the plugin, but for now you'll probably have to do that manually.
-
-To export your project, run the `gradle build` task, and give other people the
-file `build/libs/<modid>-<version>.jar`. Ignore the jars in the `build/badjars` folder. Those are intermediary jars that
-are used by the build system but *do not work* in a normal forge installation.
-
-If you don't want mixins (which allow for modifying vanilla code), then you can remove the references to mixins from
-the `build.gradle.kts` at the lines specified with comments and the `com.example.mixin` package.
-
-If you don't want access transformers (which allow for making methods public/non-final) you can delete the
-`accesstransformer.cfg` file. If you make a change to the `accesstransformers.cfg` you might need to rebuild your
-project using `./gradlew build --refresh-dependencies`.
-
-### For those who have not an attention span
-
-[![Youtube Tutorial](https://i.ytimg.com/vi/nWzHlomdCgc/maxresdefault.jpg)](https://www.youtube.com/watch?v=nWzHlomdCgc)
-
-## Licensing
-
-This template is licensed under the Unlicense (license copy present in this repository), or alternatively under [Creative Commons 1.0 Universal (CC0 1.0)](https://creativecommons.org/publicdomain/zero/1.0/), and all contributions and PR to this template are expected to follow this. This means your mod, based on this template can be licensed whatever way you want, and does not need to reference back to this template in any way.
+* Created by **Marschi47**.
+* Based on [Forge1.8.9Template by lineargraph](https://github.com/lineargraph/Forge1.8.9Template).
