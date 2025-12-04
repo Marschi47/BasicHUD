@@ -7,30 +7,51 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class HudRenderer {
+
     @SubscribeEvent
     public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         Minecraft mc = Minecraft.getMinecraft();
         FontRenderer fr = mc.fontRendererObj;
 
-        // not render when f3
         if (mc.gameSettings.showDebugInfo) return;
 
-        // --- FPS ---
+        // FPS
         int fps = Minecraft.getDebugFPS();
-        fr.drawStringWithShadow("FPS: " + fps, 10, 10, 0xFFFFFF);
+        fr.drawStringWithShadow("FPS: " + fps,
+                MyModConfig.fpsX,
+                MyModConfig.fpsY,
+                hexToInt(MyModConfig.fpsColor));
 
-        // --- PING ---
+        // PING
         int ping = getPlayerPing(mc);
-        // display only in multiplayer
         if (ping > 0) {
-            fr.drawStringWithShadow("Ping: " + ping + "ms", 10, 22, 0xFFFFFF);
+            fr.drawStringWithShadow("Ping: " + ping + "ms",
+                    MyModConfig.pingX,
+                    MyModConfig.pingY,
+                    hexToInt(MyModConfig.pingColor));
         }
 
-        // --- CPS ---
-        fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps, 10, 34, 0xFFFFFF);
+        // CPS
+        fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps,
+                MyModConfig.cpsX,
+                MyModConfig.cpsY,
+                hexToInt(MyModConfig.cpsColor));
     }
 
-    // Helper method to get ping
+    /**
+     * convert Hex String to Integer
+     * default is white (0xFFFFFF) if invalid
+     */
+    private int hexToInt(String hex) {
+        try {
+            // Parses string as base 16 (Hex)
+            return Integer.parseInt(hex, 16);
+        } catch (NumberFormatException e) {
+            return 0xFFFFFF; // return white if invalid
+        }
+    }
+
+    // helper method to get ping
     private int getPlayerPing(Minecraft mc) {
         if (!mc.isSingleplayer() && mc.thePlayer != null) {
             try {
