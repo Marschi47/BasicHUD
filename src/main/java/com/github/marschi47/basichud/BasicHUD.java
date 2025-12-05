@@ -32,6 +32,9 @@ public class BasicHUD {
 
         // CpsTracker instance
         MinecraftForge.EVENT_BUS.register(new CpsTracker());
+
+        // keystrokes
+        MinecraftForge.EVENT_BUS.register(new KeystrokesTracker());
     }
 
     // auto when "Done" button is clicked

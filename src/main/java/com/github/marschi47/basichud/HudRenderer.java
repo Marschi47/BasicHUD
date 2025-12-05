@@ -18,28 +18,41 @@ public class HudRenderer {
         // FPS
         int fps = Minecraft.getDebugFPS();
         if (MyModConfig.fpsEnabled) {
-            fr.drawStringWithShadow("FPS: " + fps,
-                    MyModConfig.fpsX,
-                    MyModConfig.fpsY,
-                    hexToInt(MyModConfig.fpsColor));
+            fr.drawStringWithShadow("FPS: " + fps, MyModConfig.fpsX, MyModConfig.fpsY, hexToInt(MyModConfig.fpsColor));
         }
 
         // PING
         int ping = getPlayerPing(mc);
         if (ping > 0 && MyModConfig.pingEnabled) {
-            fr.drawStringWithShadow("Ping: " + ping + "ms",
-                    MyModConfig.pingX,
-                    MyModConfig.pingY,
-                    hexToInt(MyModConfig.pingColor));
+            fr.drawStringWithShadow("Ping: " + ping + "ms", MyModConfig.pingX, MyModConfig.pingY, hexToInt(MyModConfig.pingColor));
         }
 
         // CPS
         if(MyModConfig.cpsEnabled) {
-            fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps,
-                    MyModConfig.cpsX,
-                    MyModConfig.cpsY,
-                    hexToInt(MyModConfig.cpsColor));
+            fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps, MyModConfig.cpsX, MyModConfig.cpsY, hexToInt(MyModConfig.cpsColor));
         }
+
+        // W key
+        fr.drawStringWithShadow("W", 100, 100, getKeyColor(KeystrokesTracker.wPressed));
+        // A key
+        fr.drawStringWithShadow("A", 90, 110, getKeyColor(KeystrokesTracker.aPressed));
+        // S key
+        fr.drawStringWithShadow("S", 100, 110, getKeyColor(KeystrokesTracker.sPressed));
+        // D key
+        fr.drawStringWithShadow("D", 110, 110, getKeyColor(KeystrokesTracker.dPressed));
+        // Shift key
+        fr.drawStringWithShadow(" [  Shift  ] ", 75, 130, getKeyColor(KeystrokesTracker.shiftPressed));
+        // Space key
+        fr.drawStringWithShadow(" [  Space  ] ", 70, 120, getKeyColor(KeystrokesTracker.spacePressed));
+        // LMB
+        fr.drawStringWithShadow("LMB", 85, 140, getKeyColor(KeystrokesTracker.leftClickPressed));
+        // RMB
+        fr.drawStringWithShadow("RMB", 105, 140, getKeyColor(KeystrokesTracker.rightClickPressed));
+    }
+
+    // Helper function to decide color based on press state
+    private int getKeyColor(boolean pressed) {
+        return pressed ? 0xFF00FF00 : 0xFFFFFFFF;
     }
 
     /**
