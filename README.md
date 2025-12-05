@@ -6,7 +6,7 @@
 ## Features
 
 * **Stats Display:** Real-time FPS, Ping, and CPS.
-* **Customization:** Fully configurable position and text colors.
+* **Customization:** Fully configurable position, text colors and on/off toggle.
 * **GUI:** Built-in config menu for easy adjustments.
 
 ## Installation
@@ -19,6 +19,12 @@
 
 * The HUD appears automatically when you join a world or server.
 * **To edit settings:** Open the Forge Mod menu and access the config menu through the config button.
+
+## Screenshots
+
+![Screenshot-1](src/main/resources/screenshot-1.png)
+![Screenshot-2](src/main/resources/screenshot-2.png)
+![Screenshot-3](src/main/resources/screenshot-3.png)
 
 ## Building from Source
 

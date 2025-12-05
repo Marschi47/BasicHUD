@@ -17,14 +17,16 @@ public class HudRenderer {
 
         // FPS
         int fps = Minecraft.getDebugFPS();
-        fr.drawStringWithShadow("FPS: " + fps,
-                MyModConfig.fpsX,
-                MyModConfig.fpsY,
-                hexToInt(MyModConfig.fpsColor));
+        if (MyModConfig.fpsEnabled) {
+            fr.drawStringWithShadow("FPS: " + fps,
+                    MyModConfig.fpsX,
+                    MyModConfig.fpsY,
+                    hexToInt(MyModConfig.fpsColor));
+        }
 
         // PING
         int ping = getPlayerPing(mc);
-        if (ping > 0) {
+        if (ping > 0 && MyModConfig.pingEnabled) {
             fr.drawStringWithShadow("Ping: " + ping + "ms",
                     MyModConfig.pingX,
                     MyModConfig.pingY,
@@ -32,10 +34,12 @@ public class HudRenderer {
         }
 
         // CPS
-        fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps,
-                MyModConfig.cpsX,
-                MyModConfig.cpsY,
-                hexToInt(MyModConfig.cpsColor));
+        if(MyModConfig.cpsEnabled) {
+            fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps,
+                    MyModConfig.cpsX,
+                    MyModConfig.cpsY,
+                    hexToInt(MyModConfig.cpsColor));
+        }
     }
 
     /**
