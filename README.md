@@ -5,7 +5,7 @@
 
 ## Features
 
-* **Stats Display:** Real-time FPS, Ping, and CPS.
+* **Stats Display:** Real-time FPS, Ping, CPS and Keystrokes.
 * **Customization:** Fully configurable position, text colors and on/off toggle.
 * **GUI:** Built-in config menu for easy adjustments.
 
