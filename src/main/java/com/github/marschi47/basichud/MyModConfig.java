@@ -24,6 +24,9 @@ public class MyModConfig {
     public static int cpsY = 34;
     public static String cpsColor = "FFFFFF";
 
+    // keystrokes settings
+    public static boolean keystrokesEnabled = true;
+
     public static void init(File configFile) {
         config = new Configuration(configFile);
         loadConfig();
@@ -48,6 +51,9 @@ public class MyModConfig {
             cpsX = config.getInt("cpsX", "HUD_CPS", 10, 0, 1000, "X Position of CPS");
             cpsY = config.getInt("cpsY", "HUD_CPS", 34, 0, 1000, "Y Position of CPS");
             cpsColor = config.getString("cpsColor", "HUD_CPS", "FFFFFF", "Hex color code (Red: FF0000, Blue: 0000FF, Green: 00FF00)");
+
+            // keystrokes
+            keystrokesEnabled = config.getBoolean("KeystrokesEnabled", "HUD_Keystrokes", true, "If Keystrokes are shown");
 
         } catch (Exception e) {
             System.err.println("Error loading config: " + e.getMessage());
