@@ -2,6 +2,7 @@ package com.github.marschi47.basichud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -32,22 +33,19 @@ public class HudRenderer {
             fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps, MyModConfig.cpsX, MyModConfig.cpsY, hexToInt(MyModConfig.cpsColor));
         }
 
-        // W key
-        fr.drawStringWithShadow("W", 100, 100, getKeyColor(KeystrokesTracker.wPressed));
-        // A key
-        fr.drawStringWithShadow("A", 90, 110, getKeyColor(KeystrokesTracker.aPressed));
-        // S key
-        fr.drawStringWithShadow("S", 100, 110, getKeyColor(KeystrokesTracker.sPressed));
-        // D key
-        fr.drawStringWithShadow("D", 110, 110, getKeyColor(KeystrokesTracker.dPressed));
-        // Shift key
-        fr.drawStringWithShadow(" [  Shift  ] ", 75, 130, getKeyColor(KeystrokesTracker.shiftPressed));
-        // Space key
-        fr.drawStringWithShadow(" [  Space  ] ", 70, 120, getKeyColor(KeystrokesTracker.spacePressed));
-        // LMB
-        fr.drawStringWithShadow("LMB", 85, 140, getKeyColor(KeystrokesTracker.leftClickPressed));
-        // RMB
-        fr.drawStringWithShadow("RMB", 105, 140, getKeyColor(KeystrokesTracker.rightClickPressed));
+        if(MyModConfig.keystrokesEnabled) {
+            ScaledResolution sr = new ScaledResolution(Minecraft.getMinecraft());
+            int width = sr.getScaledWidth();
+
+            fr.drawStringWithShadow("W", width - 35, 10, getKeyColor(KeystrokesTracker.wPressed));
+            fr.drawStringWithShadow("A", width - 55, 24, getKeyColor(KeystrokesTracker.aPressed));
+            fr.drawStringWithShadow("S", width - 35, 24, getKeyColor(KeystrokesTracker.sPressed));
+            fr.drawStringWithShadow("D", width - 15, 24, getKeyColor(KeystrokesTracker.dPressed));
+            fr.drawStringWithShadow("LMB", width - 58, 38, getKeyColor(KeystrokesTracker.leftClickPressed));
+            fr.drawStringWithShadow("RMB", width - 26, 38, getKeyColor(KeystrokesTracker.rightClickPressed));
+            fr.drawStringWithShadow("Space", width - 48, 52, getKeyColor(KeystrokesTracker.spacePressed));
+            fr.drawStringWithShadow("Shift", width - 46, 66, getKeyColor(KeystrokesTracker.shiftPressed));
+        }
     }
 
     // Helper function to decide color based on press state
