@@ -30,7 +30,7 @@ public class HudRenderer {
 
         // CPS
         if(MyModConfig.cpsEnabled) {
-            fr.drawStringWithShadow("CPS: " + CpsTracker.rightCps + "|" + CpsTracker.leftCps, MyModConfig.cpsX, MyModConfig.cpsY, hexToInt(MyModConfig.cpsColor));
+            fr.drawStringWithShadow("CPS: " + CpsTracker.leftCps + "|" + CpsTracker.rightCps, MyModConfig.cpsX, MyModConfig.cpsY, hexToInt(MyModConfig.cpsColor));
         }
 
         if(MyModConfig.keystrokesEnabled) {
@@ -41,8 +41,8 @@ public class HudRenderer {
             fr.drawStringWithShadow("A", width - 55, 24, getKeyColor(KeystrokesTracker.aPressed));
             fr.drawStringWithShadow("S", width - 35, 24, getKeyColor(KeystrokesTracker.sPressed));
             fr.drawStringWithShadow("D", width - 15, 24, getKeyColor(KeystrokesTracker.dPressed));
-            fr.drawStringWithShadow("LMB", width - 58, 38, getKeyColor(KeystrokesTracker.leftClickPressed));
-            fr.drawStringWithShadow("RMB", width - 26, 38, getKeyColor(KeystrokesTracker.rightClickPressed));
+            fr.drawStringWithShadow("LMB", width - 58, 38, getKeyColor(KeystrokesTracker.leftClickPressed()));
+            fr.drawStringWithShadow("RMB", width - 26, 38, getKeyColor(KeystrokesTracker.rightClickPressed()));
             fr.drawStringWithShadow("Space", width - 48, 52, getKeyColor(KeystrokesTracker.spacePressed));
             fr.drawStringWithShadow("Shift", width - 46, 66, getKeyColor(KeystrokesTracker.shiftPressed));
         }

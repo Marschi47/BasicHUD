@@ -1,10 +1,7 @@
 package com.github.marschi47.basichud;
 
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -24,13 +21,16 @@ public class BasicHUD {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        // main mod class for ConfigChangedEvent
+        // main mod class
         MinecraftForge.EVENT_BUS.register(this);
 
-        // HudRenderer instance
+        // HudRenderer
         MinecraftForge.EVENT_BUS.register(new HudRenderer());
 
-        // CpsTracker instance
+        //Mouse Input Handler
+        MinecraftForge.EVENT_BUS.register(new MouseInputHandler());
+
+        // CpsTracker
         MinecraftForge.EVENT_BUS.register(new CpsTracker());
 
         // keystrokes

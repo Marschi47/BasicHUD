@@ -1,10 +1,7 @@
 package com.github.marschi47.basichud;
 
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import net.minecraftforge.fml.common.gameevent.InputEvent;
-import org.lwjgl.input.Mouse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,24 +14,23 @@ public class CpsTracker {
     private static final List<Long> rCLICKS = new ArrayList<>();
     private static final List<Long> lCLICKS = new ArrayList<>();
 
-    // track mouse clikcs on forge event bus
-    @SubscribeEvent
-    public void onMouseInput(InputEvent.MouseInputEvent event) {
-        // left click
-        if (Mouse.getEventButton() == 0 && Mouse.getEventButtonState()) {
-            rCLICKS.add(System.currentTimeMillis());
-        }
-        // right click
-        if (Mouse.getEventButton() == 1 && Mouse.getEventButtonState()) {
-            lCLICKS.add(System.currentTimeMillis());
-        }
-    }
+
 
     // calc cps on FML event bus
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             long currentTime = System.currentTimeMillis();
+
+            // if click add to list
+            if (MouseInputHandler.leftClickedThisTick) {
+                lCLICKS.add(currentTime);
+                MouseInputHandler.leftClickedThisTick = false; // reset flag
+            }
+            if (MouseInputHandler.rightClickedThisTick) {
+                rCLICKS.add(currentTime);
+                MouseInputHandler.rightClickedThisTick = false; // reset flag
+            }
 
             // remove older than 1sek
             rCLICKS.removeIf(time -> time < currentTime - 1000);

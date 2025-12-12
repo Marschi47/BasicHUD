@@ -3,7 +3,6 @@ package com.github.marschi47.basichud;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
 
 public class KeystrokesTracker {
 
@@ -13,9 +12,6 @@ public class KeystrokesTracker {
     public static boolean dPressed = false;
     public static boolean spacePressed = false;
     public static boolean shiftPressed = false;
-
-    public static boolean leftClickPressed = false;
-    public static boolean rightClickPressed = false;
 
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
@@ -38,16 +34,11 @@ public class KeystrokesTracker {
         }
     }
 
-    @SubscribeEvent
-    public void onMouseInput(InputEvent.MouseInputEvent event) {
-        int button = Mouse.getEventButton();
-        boolean state = Mouse.getEventButtonState();
+    public static boolean leftClickPressed() {
+        return MouseInputHandler.leftClickState;
+    }
 
-        if (button == 0) {
-            leftClickPressed = state;
-        }
-        else if (button == 1) {
-            rightClickPressed = state;
-        }
+    public static boolean rightClickPressed() {
+        return MouseInputHandler.rightClickState;
     }
 }
