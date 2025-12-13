@@ -50,7 +50,7 @@ public class HudRenderer {
 
     // Helper function to decide color based on press state
     private int getKeyColor(boolean pressed) {
-        return pressed ? 0xFF00FF00 : 0xFFFFFFFF;
+        return pressed ? hexToInt(MyModConfig.keystrokesActivatedColor) : hexToInt(MyModConfig.keystrokesColor);
     }
 
     /**

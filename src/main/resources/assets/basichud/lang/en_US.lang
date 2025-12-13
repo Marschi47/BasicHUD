@@ -1,0 +1,11 @@
+# Category Names
+basichud.config.fps=FPS Settings
+basichud.config.ping=Ping Settings
+basichud.config.cps=CPS Settings
+basichud.config.keystrokes=Keystrokes Settings
+
+# Category Tooltips
+basichud.config.fps.tooltip=Configure the FPS display
+basichud.config.ping.tooltip=Configure the Ping display
+basichud.config.cps.tooltip=Configure CPS display
+basichud.config.keystrokes.tooltip=Configure Keystrokes display

@@ -26,6 +26,8 @@ public class MyModConfig {
 
     // keystrokes settings
     public static boolean keystrokesEnabled = true;
+    public static String keystrokesColor = "FFFFFF";
+    public static String keystrokesActivatedColor = "00FF00";
 
     public static void init(File configFile) {
         config = new Configuration(configFile);
@@ -41,7 +43,7 @@ public class MyModConfig {
             fpsColor = config.getString("fpsColor", "HUD_FPS", "FFFFFF", "Hex color code (Red: FF0000, Blue: 0000FF, Green: 00FF00)");
 
             // Ping Category
-            pingEnabled = config.getBoolean("pingEnabked", "HUD_PING", true, "If Ping is shown");
+            pingEnabled = config.getBoolean("pingEnabled", "HUD_PING", true, "If Ping is shown");
             pingX = config.getInt("pingX", "HUD_PING", 10, 0, 1000, "X Position of Ping");
             pingY = config.getInt("pingY", "HUD_PING", 22, 0, 1000, "Y Position of Ping");
             pingColor = config.getString("pingColor", "HUD_PING", "FFFFFF", "Hex color code (Red: FF0000, Blue: 0000FF, Green: 00FF00)");
@@ -54,6 +56,8 @@ public class MyModConfig {
 
             // keystrokes
             keystrokesEnabled = config.getBoolean("KeystrokesEnabled", "HUD_Keystrokes", true, "If Keystrokes are shown");
+            keystrokesColor = config.getString("keystrokesColor", "HUD_Keystrokes", "FFFFFF", "Hex color code (Red: FF0000, Blue: 0000FF, Green: 00FF00)");
+            keystrokesActivatedColor = config.getString("keystrokesActivatedColor", "HUD_Keystrokes", "00FF00", "Hex color code (Red: FF0000, Blue: 0000FF, Green: 00FF00)");
 
         } catch (Exception e) {
             System.err.println("Error loading config: " + e.getMessage());
