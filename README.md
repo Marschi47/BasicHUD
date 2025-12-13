@@ -9,6 +9,12 @@
 * **Customization:** Fully configurable position, text colors and on/off toggle.
 * **GUI:** Built-in config menu for easy adjustments.
 
+## Planned Features
+
+* [ ] **Potion Status HUD:** Display active potion effects and their remaining duration.
+* [ ] **Draggable HUD:** Add a GUI editor to drag and drop HUD elements to custom positions.
+* [ ] **Media Integration:** Display the currently playing song (Spotify/System Media) on the HUD.
+
 ## Installation
 
 1.  Download the latest `.jar` from the **[Releases](https://github.com/Marschi47/BasicHUD/releases)** tab.
