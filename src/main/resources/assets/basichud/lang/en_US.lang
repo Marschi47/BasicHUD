@@ -9,3 +9,5 @@ basichud.config.fps.tooltip=Configure the FPS display
 basichud.config.ping.tooltip=Configure the Ping display
 basichud.config.cps.tooltip=Configure CPS display
 basichud.config.keystrokes.tooltip=Configure Keystrokes display
+basichud.config.potions=Potion Status Settings
+basichud.config.potions.tooltip=Configure Potion Status Display
