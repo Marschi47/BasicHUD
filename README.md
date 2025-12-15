@@ -1,17 +1,16 @@
 ![BasicHUD Logo](src/main/resources/BasicHUD.png)
 # BasicHUD
 
-**BasicHUD** is a lightweight Forge mod for Minecraft 1.8.9 that displays basic information on screen.
+**BasicHUD** is a Forge mod for Minecraft 1.8.9 that displays basic information as a customizable HUD.
 
 ## Features
 
-* **Stats Display:** Real-time FPS, Ping, CPS and Keystrokes.
+* **Stats Display:** Real-time FPS, Ping, CPS, Keystrokes and active Potion Effects.
 * **Customization:** Fully configurable position, text colors and on/off toggle.
 * **GUI:** Built-in config menu for easy adjustments.
 
 ## Planned Features
 
-* [ ] **Potion Status HUD:** Display active potion effects and their remaining duration.
 * [ ] **Draggable HUD:** Add a GUI editor to drag and drop HUD elements to custom positions.
 * [ ] **Media Integration:** Display the currently playing song (Spotify/System Media) on the HUD.
 
