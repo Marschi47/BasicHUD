@@ -6,6 +6,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.gameevent.InputEvent;
+import org.lwjgl.input.Keyboard;
 
 @Mod(
         modid = "basichud",
@@ -13,6 +18,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
         guiFactory = "com.github.marschi47.basichud.GuiFactory"
 )
 public class BasicHUD {
+    public static KeyBinding openConfigKey;
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         // config file
@@ -35,6 +42,10 @@ public class BasicHUD {
 
         // keystrokes
         MinecraftForge.EVENT_BUS.register(new KeystrokesTracker());
+
+        // config keybind
+        openConfigKey = new KeyBinding("Open Config", Keyboard.KEY_K, "BasicHUD");
+        ClientRegistry.registerKeyBinding(openConfigKey);
     }
 
     // auto when "Done" button is clicked
@@ -44,6 +55,13 @@ public class BasicHUD {
         if (event.modID.equals("basichud")) {
             // reload the config
             MyModConfig.loadConfig();
+        }
+    }
+
+    @SubscribeEvent
+    public void onKeyInput(InputEvent.KeyInputEvent event) {
+        if (openConfigKey.isPressed()) {
+            Minecraft.getMinecraft().displayGuiScreen(new ConfigGUI(null));
         }
     }
 }

@@ -7,7 +7,7 @@
 
 * **Stats Display:** Real-time FPS, Ping, CPS, Keystrokes and active Potion Effects.
 * **Customization:** Fully configurable position, text colors and on/off toggle.
-* **GUI:** Built-in config menu for easy adjustments.
+* **GUI:** Built-in config menu (default Shortcut: K) for easy adjustments.
 
 ## Planned Features
 
@@ -23,7 +23,7 @@
 ## Usage
 
 * The HUD appears automatically when you join a world or server.
-* **To edit settings:** Open the Forge Mod menu and access the config menu through the config button.
+* **To edit settings:** Press K to open the config or open the Forge Mod menu and access the config menu through the config button.
 
 ## Screenshots
 
@@ -45,5 +45,5 @@ If you want to compile the mod yourself:
 
 ## Credits
 
-* Created by **Marschi47**.
-* Based on [Forge1.8.9Template by lineargraph](https://github.com/lineargraph/Forge1.8.9Template).
+* Created by [**Marschi47**](https://github.com/Marschi47).
+* Based on [**Forge1.8.9Template by lineargraph**](https://github.com/lineargraph/Forge1.8.9Template).
