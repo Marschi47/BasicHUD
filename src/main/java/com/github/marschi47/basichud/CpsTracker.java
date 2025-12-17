@@ -14,9 +14,6 @@ public class CpsTracker {
     private static final List<Long> rCLICKS = new ArrayList<>();
     private static final List<Long> lCLICKS = new ArrayList<>();
 
-
-
-    // calc cps on FML event bus
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
@@ -32,9 +29,14 @@ public class CpsTracker {
                 MouseInputHandler.rightClickedThisTick = false; // reset flag
             }
 
-            // remove older than 1sek
-            rCLICKS.removeIf(time -> time < currentTime - 1000);
-            lCLICKS.removeIf(time -> time < currentTime - 1000);
+            // older than 1 sec gets removed
+            while (!lCLICKS.isEmpty() && lCLICKS.get(0) < currentTime - 1000) {
+                lCLICKS.remove(0);
+            }
+
+            while (!rCLICKS.isEmpty() && rCLICKS.get(0) < currentTime - 1000) {
+                rCLICKS.remove(0);
+            }
 
             // set final count
             leftCps = lCLICKS.size();
