@@ -6,7 +6,7 @@
 ## Features
 
 * **Stats Display:** Real-time FPS, Ping, CPS, Keystrokes and active Potion Effects.
-* **Customization:** Fully configurable position, text colors and on/off toggle.
+* **Customization:** Fully configurable position, text colors (incl. RGB/Chroma), background and on/off toggle.
 * **GUI:** Built-in config menu (default Shortcut: K) for easy adjustments.
 
 ## Planned Features
