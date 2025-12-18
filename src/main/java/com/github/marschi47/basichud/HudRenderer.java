@@ -2,6 +2,7 @@ package com.github.marschi47.basichud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -9,6 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.client.resources.I18n;
+import java.awt.Color;
 import java.util.Collection;
 
 public class HudRenderer {
@@ -26,16 +28,21 @@ public class HudRenderer {
         if (MyModConfig.fpsEnabled) {
             int fps = Minecraft.getDebugFPS();
             String fpsText = "FPS: " + fps;
+            int textWidth = fr.getStringWidth(fpsText);
 
             int xPos;
             if (MyModConfig.fpsRightAlign) {
-                int textWidth = fr.getStringWidth(fpsText);
                 xPos = width - MyModConfig.fpsX - textWidth;
             } else {
                 xPos = MyModConfig.fpsX;
             }
 
-            fr.drawStringWithShadow(fpsText, xPos, MyModConfig.fpsY, hexToInt(MyModConfig.fpsColor));
+            if (MyModConfig.fpsBackground) {
+                drawBackgroundBox(xPos - 2, MyModConfig.fpsY - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+            }
+
+            int color = MyModConfig.fpsChroma ? getChromaColor(xPos, MyModConfig.fpsY) : hexToInt(MyModConfig.fpsColor);
+            fr.drawStringWithShadow(fpsText, xPos, MyModConfig.fpsY, color);
         }
 
         // PING
@@ -43,99 +50,121 @@ public class HudRenderer {
             int ping = getPlayerPing(mc);
             if (ping > 0) {
                 String pingText = "Ping: " + ping + "ms";
+                int textWidth = fr.getStringWidth(pingText);
 
                 int xPos;
                 if (MyModConfig.pingRightAlign) {
-                    int textWidth = fr.getStringWidth(pingText);
                     xPos = width - MyModConfig.pingX - textWidth;
                 } else {
                     xPos = MyModConfig.pingX;
                 }
 
-                fr.drawStringWithShadow(pingText, xPos, MyModConfig.pingY, hexToInt(MyModConfig.pingColor));
+                if (MyModConfig.pingBackground) {
+                    drawBackgroundBox(xPos - 2, MyModConfig.pingY - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+                }
+
+                int color = MyModConfig.pingChroma ? getChromaColor(xPos, MyModConfig.pingY) : hexToInt(MyModConfig.pingColor);
+                fr.drawStringWithShadow(pingText, xPos, MyModConfig.pingY, color);
             }
         }
 
         // CPS
         if(MyModConfig.cpsEnabled) {
             String cpsText = "CPS: " + CpsTracker.leftCps + "|" + CpsTracker.rightCps;
+            int textWidth = fr.getStringWidth(cpsText);
 
             int xPos;
             if (MyModConfig.cpsRightAlign) {
-                int textWidth = fr.getStringWidth(cpsText);
                 xPos = width - MyModConfig.cpsX - textWidth;
             } else {
                 xPos = MyModConfig.cpsX;
             }
 
-            fr.drawStringWithShadow(cpsText, xPos, MyModConfig.cpsY, hexToInt(MyModConfig.cpsColor));
+            if (MyModConfig.cpsBackground) {
+                drawBackgroundBox(xPos - 2, MyModConfig.cpsY - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+            }
+
+            int color = MyModConfig.cpsChroma ? getChromaColor(xPos, MyModConfig.cpsY) : hexToInt(MyModConfig.cpsColor);
+            fr.drawStringWithShadow(cpsText, xPos, MyModConfig.cpsY, color);
         }
 
-        //keystrokes
+        // keystrokes
         if(MyModConfig.keystrokesEnabled) {
-
-            int hudWidth = 60;
+            int gap = 2;
+            int boxSize = 18;
+            int height = 18;
+            int totalWidth = (boxSize * 3) + (gap * 2);
 
             int xPos;
             int yPos = MyModConfig.keystrokesY;
 
             if (MyModConfig.keystrokesRightAlign) {
-                xPos = width - MyModConfig.keystrokesX - hudWidth;
+                xPos = width - MyModConfig.keystrokesX - totalWidth;
             } else {
                 xPos = MyModConfig.keystrokesX;
             }
 
             // W
-            fr.drawStringWithShadow("W", xPos + 25, yPos, getKeyColor(KeystrokesTracker.wPressed));
+            drawKey(fr, "W", xPos + boxSize + gap, yPos, boxSize, height, KeystrokesTracker.wPressed);
 
             // A S D
-            fr.drawStringWithShadow("A", xPos + 5,  yPos + 14, getKeyColor(KeystrokesTracker.aPressed));
-            fr.drawStringWithShadow("S", xPos + 25, yPos + 14, getKeyColor(KeystrokesTracker.sPressed));
-            fr.drawStringWithShadow("D", xPos + 45, yPos + 14, getKeyColor(KeystrokesTracker.dPressed));
+            int yRow2 = yPos + height + gap;
+            drawKey(fr, "A", xPos, yRow2, boxSize, height, KeystrokesTracker.aPressed);
+            drawKey(fr, "S", xPos + boxSize + gap, yRow2, boxSize, height, KeystrokesTracker.sPressed);
+            drawKey(fr, "D", xPos + (boxSize + gap) * 2, yRow2, boxSize, height, KeystrokesTracker.dPressed);
 
-            // Mouse
-            fr.drawStringWithShadow("LMB", xPos + 2,  yPos + 28, getKeyColor(KeystrokesTracker.leftClickPressed()));
-            fr.drawStringWithShadow("RMB", xPos + 34, yPos + 28, getKeyColor(KeystrokesTracker.rightClickPressed()));
+            // RMB LMB
+            int yRow3 = yRow2 + height + gap;
+            int mouseWidth = (totalWidth - gap) / 2;
+            drawKey(fr, "LMB", xPos, yRow3, mouseWidth, height, KeystrokesTracker.leftClickPressed());
+            drawKey(fr, "RMB", xPos + mouseWidth + gap, yRow3, mouseWidth, height, KeystrokesTracker.rightClickPressed());
 
             // Space
-            fr.drawStringWithShadow("Space", xPos + 12, yPos + 42, getKeyColor(KeystrokesTracker.spacePressed));
+            int yRow4 = yRow3 + height + gap;
+            drawKey(fr, "Space", xPos, yRow4, totalWidth, height, KeystrokesTracker.spacePressed);
 
             // Shift
-            fr.drawStringWithShadow("Shift", xPos + 14, yPos + 56, getKeyColor(KeystrokesTracker.shiftPressed));
+            int yRow5 = yRow4 + height + gap;
+            drawKey(fr, "Shift", xPos, yRow5, totalWidth, height, KeystrokesTracker.shiftPressed);
         }
 
-        // POTION EFFECTS
+        // potions
         if (MyModConfig.potionHudEnabled) {
             Collection<PotionEffect> effects = mc.thePlayer.getActivePotionEffects();
 
             if (!effects.isEmpty()) {
                 int xPos = MyModConfig.potionHudX;
                 int yOffset = MyModConfig.potionHudY;
-                int color = hexToInt(MyModConfig.potionHudColor);
+                int baseColor = hexToInt(MyModConfig.potionHudColor);
                 int lineHeight = fr.FONT_HEIGHT + 2;
 
                 if (MyModConfig.potionHudVerticalCenter) {
                     int screenHeight = sr.getScaledHeight();
-
                     int totalListHeight = effects.size() * lineHeight;
-
                     yOffset = (screenHeight / 2) - (totalListHeight / 2);
                 }
 
                 for (PotionEffect effect : effects) {
                     Potion potion = Potion.potionTypes[effect.getPotionID()];
-
                     String name = I18n.format(potion.getName());
-
                     if (effect.getAmplifier() == 1) {
-                        name = name + " II";
-                    } else if (effect.getAmplifier() == 2) {
-                        name = name + " III";
-                    } else if (effect.getAmplifier() == 3) {
-                        name = name + " IV";
+                        name += " II";
                     }
+                    else if (effect.getAmplifier() == 2) {
+                        name += " III";
+                    }
+                    else if (effect.getAmplifier() == 3) {
+                        name += " IV";
+                    }
+
                     String duration = Potion.getDurationString(effect);
                     String displayText = name + ": " + duration;
+
+                    if (MyModConfig.potionHudBackground) {
+                        drawBackgroundBox(xPos - 2, yOffset - 1, fr.getStringWidth(displayText) + 4, fr.FONT_HEIGHT + 1);
+                    }
+
+                    int color = MyModConfig.potionHudChroma ? getChromaColor(xPos, yOffset) : baseColor;
 
                     fr.drawStringWithShadow(displayText, xPos, yOffset, color);
                     yOffset += lineHeight;
@@ -144,25 +173,42 @@ public class HudRenderer {
         }
     }
 
-    // Helper function to decide color based on press state
-    private int getKeyColor(boolean pressed) {
-        return pressed ? hexToInt(MyModConfig.keystrokesActivatedColor) : hexToInt(MyModConfig.keystrokesColor);
-    }
-
-    /**
-     * convert Hex String to Integer
-     * default is white (0xFFFFFF) if invalid
-     */
-    private int hexToInt(String hex) {
-        try {
-            // Parses string as base 16 (Hex)
-            return Integer.parseInt(hex, 16);
-        } catch (NumberFormatException e) {
-            return 0xFFFFFF; // return white if invalid
+    private void drawKey(FontRenderer fr, String text, int x, int y, int width, int height, boolean pressed) {
+        if (MyModConfig.keystrokesBackground) {
+            drawBackgroundBox(x, y, width, height);
         }
+
+        int color;
+        if (pressed) {
+            color = hexToInt(MyModConfig.keystrokesActivatedColor);
+        } else if (MyModConfig.keystrokesChroma) {
+            color = getChromaColor(x, y);
+        } else {
+            color = hexToInt(MyModConfig.keystrokesColor);
+        }
+
+        int textX = x + (width - fr.getStringWidth(text)) / 2;
+        int textY = y + (height - fr.FONT_HEIGHT) / 2 + 1;
+
+        fr.drawStringWithShadow(text, textX, textY, color);
     }
 
-    // helper method to get ping
+    private int hexToInt(String hex) {
+        try { return Integer.parseInt(hex, 16); } catch (NumberFormatException e) { return 0xFFFFFF; }
+    }
+
+    // chroma calc
+    private int getChromaColor(int x, int y) {
+        long speed = 2000;
+        float hue = (float) ((System.currentTimeMillis() + (x + y) * 10) % speed) / speed;
+        return Color.getHSBColor(hue, 1.0f, 1.0f).getRGB();
+    }
+
+    private void drawBackgroundBox(int x, int y, int width, int height) {
+        int backgroundColor = 0x90000000;
+        Gui.drawRect(x, y, x + width, y + height, backgroundColor);
+    }
+
     private int getPlayerPing(Minecraft mc) {
         if (!mc.isSingleplayer() && mc.thePlayer != null) {
             try {

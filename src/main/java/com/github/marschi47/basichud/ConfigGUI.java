@@ -34,6 +34,8 @@ public class ConfigGUI extends GuiConfig {
         fpsList.add(new ConfigElement(cfg.get("HUD_FPS", "fpsX", 10, "X Axis for FPS Display (0 is left)")));
         fpsList.add(new ConfigElement(cfg.get("HUD_FPS", "fpsY", 10, "Y Axis for FPS Display (0 is top)")));
         fpsList.add(new ConfigElement(cfg.get("HUD_FPS", "fpsColor", "FFFFFF", "Color of FPS Display (Hex Code)")));
+        fpsList.add(new ConfigElement(cfg.get("HUD_FPS", "fpsChroma", false, "RGB / Chroma")));
+        fpsList.add(new ConfigElement(cfg.get("HUD_FPS", "fpsBackground", false, "Background")));
 
         // FPS button
         list.add(new DummyConfigElement.DummyCategoryElement("FPS Settings", "basichud.config.fps", fpsList));
@@ -45,6 +47,8 @@ public class ConfigGUI extends GuiConfig {
         pingList.add(new ConfigElement(cfg.get("HUD_PING", "pingX", 10, "X Axis for Ping Display (0 is left)")));
         pingList.add(new ConfigElement(cfg.get("HUD_PING", "pingY", 22, "Y Axis for Ping Display (0 is top)")));
         pingList.add(new ConfigElement(cfg.get("HUD_PING", "pingColor", "FFFFFF", "Color of Ping Display (Hex Code)")));
+        pingList.add(new ConfigElement(cfg.get("HUD_PING", "pingChroma", false, "RGB / Chroma")));
+        pingList.add(new ConfigElement(cfg.get("HUD_PING", "pingBackground", false, "Background")));
 
         // ping button
         list.add(new DummyConfigElement.DummyCategoryElement("Ping Settings", "basichud.config.ping", pingList));
@@ -56,6 +60,8 @@ public class ConfigGUI extends GuiConfig {
         cpsList.add(new ConfigElement(cfg.get("HUD_CPS", "cpsX", 10, "X Axis for CPS Display (0 is left)")));
         cpsList.add(new ConfigElement(cfg.get("HUD_CPS", "cpsY", 34, "Y Axis for CPS Display (0 is top)")));
         cpsList.add(new ConfigElement(cfg.get("HUD_CPS", "cpsColor", "FFFFFF", "Color of CPS Display (Hex Code)")));
+        cpsList.add(new ConfigElement(cfg.get("HUD_CPS", "cpsChroma", false, "RGB / Chroma")));
+        cpsList.add(new ConfigElement(cfg.get("HUD_CPS", "cpsBackground", false, "Background")));
 
         // CPS button
         list.add(new DummyConfigElement.DummyCategoryElement("CPS Settings", "basichud.config.cps", cpsList));
@@ -68,6 +74,8 @@ public class ConfigGUI extends GuiConfig {
         keyList.add(new ConfigElement(cfg.get("HUD_Keystrokes", "keystrokesX", 5, "X Position / Margin")));
         keyList.add(new ConfigElement(cfg.get("HUD_Keystrokes", "keystrokesY", 10, "Y Position")));
         keyList.add(new ConfigElement(cfg.get("HUD_Keystrokes", "keystrokesActivatedColor", "00FF00", "Color of Keystrokes Display when activated (Hex Code)")));
+        keyList.add(new ConfigElement(cfg.get("HUD_Keystrokes", "keystrokesChroma", false, "RGB / Chroma")));
+        keyList.add(new ConfigElement(cfg.get("HUD_Keystrokes", "keystrokesBackground", false, "Background")));
 
         // keysrtokes button
         list.add(new DummyConfigElement.DummyCategoryElement("Keystrokes Settings", "basichud.config.keystrokes", keyList));
@@ -79,6 +87,8 @@ public class ConfigGUI extends GuiConfig {
         potionList.add(new ConfigElement(cfg.get("HUD_POTIONS", "potionHudX", 10, "X Axis")));
         potionList.add(new ConfigElement(cfg.get("HUD_POTIONS", "potionHudY", 100, "Y Axis")));
         potionList.add(new ConfigElement(cfg.get("HUD_POTIONS", "potionHudColor", "FFFFFF", "Color")));
+        potionList.add(new ConfigElement(cfg.get("HUD_POTIONS", "potionHudChroma", false, "RGB / Chroma")));
+        potionList.add(new ConfigElement(cfg.get("HUD_POTIONS", "potionHudBackground", false, "Background")));
 
         // Potion button
         list.add(new DummyConfigElement.DummyCategoryElement("Potion Settings", "basichud.config.potions", potionList));
