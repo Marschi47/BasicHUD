@@ -61,7 +61,7 @@ public class BasicHUD {
     @SubscribeEvent
     public void onKeyInput(InputEvent.KeyInputEvent event) {
         if (openConfigKey.isPressed()) {
-            Minecraft.getMinecraft().displayGuiScreen(new ConfigGUI(null));
+            Minecraft.getMinecraft().displayGuiScreen(new EditHudGui());
         }
     }
 }
