@@ -14,12 +14,12 @@ public class EditHudGui extends GuiScreen {
     public void initGui() {
         super.initGui();
         // button for detailed settings menu
-        this.buttonList.add(new GuiButton(0, this.width / 2 - 50, this.height / 2 - 10, 100, 20, "Open Settings"));
+        this.buttonList.add(new GuiButton(0, this.width / 2 - 50, this.height / 2 - 10, 100, 20, "Open more Settings"));
     }
 
     @Override
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-        this.drawDefaultBackground(); // Darkens the game background slightly
+        this.drawDefaultBackground();
 
         // Calculate Bounding Boxes & Draw Dummy Elements
 
