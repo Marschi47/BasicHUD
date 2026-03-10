@@ -7,7 +7,7 @@
 
 * **Stats Display:** Real-time FPS, Ping, CPS, Keystrokes and active Potion Effects.
 * **Customization:** Fully configurable position, text colors (incl. RGB/Chroma), background and on/off toggle.
-* **GUI:** Built-in config menu (default Shortcut: K) for easy adjustments.
+* **GUI:** Built-in config menu (default Shortcut: K) for easy adjustments with Drag and Drop to change the Position.
 
 ## Installation
 
@@ -32,7 +32,7 @@
 ## Usage
 
 * The HUD appears automatically when you join a world or server.
-* **To edit settings:** Press K to open the config or open the Forge Mod menu and access the config menu through the config button.
+* **To edit settings:** Press K to open the config, there you can edit the position (Drag and Drop) and more settings (Open more settings button) of the HUD Elements.
 
 ## Screenshots
 
