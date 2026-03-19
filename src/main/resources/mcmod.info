@@ -11,7 +11,7 @@
       "Marschi47"
     ],
     "credits": "",
-    "logoFile": "BasicHUD.png",
+    "logoFile": "BasicHUD64x64.png",
     "screenshots": ["screenshot-1.png", "screenshot-2.png", "screenshot-3.png"],
     "dependencies": []
   }
