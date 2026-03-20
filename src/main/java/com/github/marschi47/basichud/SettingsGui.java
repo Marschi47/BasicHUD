@@ -71,11 +71,11 @@ public class SettingsGui extends GuiScreen {
         int y2Label = 30 + 24 * 5;
         int y3Label = y2Label + 24 * 5;
 
-        mc.fontRendererObj.drawStringWithShadow("--- FPS ---",        col1,  y1Label, 0xFFAA00);
-        mc.fontRendererObj.drawStringWithShadow("--- Ping ---",       col2,  y1Label, 0xFFAA00);
-        mc.fontRendererObj.drawStringWithShadow("--- CPS ---",        col1,  y2Label, 0xFFAA00);
-        mc.fontRendererObj.drawStringWithShadow("--- Keystrokes ---", col2,  y2Label, 0xFFAA00);
-        mc.fontRendererObj.drawStringWithShadow("--- Potion HUD ---", this.width / 2 - 40, y3Label, 0xFFAA00);
+        mc.fontRendererObj.drawStringWithShadow("FPS",        col1,  y1Label, 0xFFFFFF);
+        mc.fontRendererObj.drawStringWithShadow("Ping",       col2,  y1Label, 0xFFFFFF);
+        mc.fontRendererObj.drawStringWithShadow("CPS",        col1,  y2Label, 0xFFFFFF);
+        mc.fontRendererObj.drawStringWithShadow("Keystrokes", col2,  y2Label, 0xFFFFFF);
+        mc.fontRendererObj.drawStringWithShadow("Potion HUD", this.width / 2 - 40, y3Label, 0xF3F3F3);
 
         super.drawScreen(mouseX, mouseY, partialTicks);
     }

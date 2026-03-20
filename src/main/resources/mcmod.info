@@ -12,7 +12,7 @@
     ],
     "credits": "",
     "logoFile": "BasicHUD64x64.png",
-    "screenshots": ["screenshot-1.png", "screenshot-2.png", "screenshot-3.png"],
+    "screenshots": ["screenshot-1.png", "screenshot-2.png", "screenshot-3.png", "screenshot-4.png"],
     "dependencies": []
   }
 ]

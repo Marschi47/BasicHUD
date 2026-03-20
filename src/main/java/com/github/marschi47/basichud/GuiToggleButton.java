@@ -15,8 +15,8 @@ public class GuiToggleButton extends GuiButton {
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         if (this.visible) {
-            // Draw background (Green if true, Red/Gray if false)
-            int color = state ? 0xFF00AA00 : 0xFFAA0000;
+            // Draw background (Green if true, Red if false)
+            int color = state ? 0xFF2ECC71 : 0xFFE74C3C;
             Gui.drawRect(this.xPosition, this.yPosition, this.xPosition + this.width, this.yPosition + this.height, color);
 
             // Draw text
