@@ -20,9 +20,11 @@ public class HudRenderer {
         Minecraft mc = Minecraft.getMinecraft();
         FontRenderer fr = mc.fontRendererObj;
         ScaledResolution sr = new ScaledResolution(mc);
-        int width = sr.getScaledWidth();
+        int screenWidth = sr.getScaledWidth();
+        int screenHeight = sr.getScaledHeight();
 
-        if (mc.gameSettings.showDebugInfo) return;
+        if (mc.gameSettings.showDebugInfo)
+            return;
 
         // FPS
         if (MyModConfig.fpsEnabled) {
@@ -30,19 +32,19 @@ public class HudRenderer {
             String fpsText = "FPS: " + fps;
             int textWidth = fr.getStringWidth(fpsText);
 
-            int xPos;
-            if (MyModConfig.fpsRightAlign) {
-                xPos = width - MyModConfig.fpsX - textWidth;
-            } else {
-                xPos = MyModConfig.fpsX;
-            }
+            int xPos = MyModConfig.fpsRightAlign
+                    ? screenWidth - MyModConfig.fpsX - textWidth
+                    : MyModConfig.fpsX;
+            int yPos = MyModConfig.fpsBottomAlign
+                    ? screenHeight - MyModConfig.fpsY - fr.FONT_HEIGHT
+                    : MyModConfig.fpsY;
 
             if (MyModConfig.fpsBackground) {
-                drawBackgroundBox(xPos - 2, MyModConfig.fpsY - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+                drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
             }
 
-            int color = MyModConfig.fpsChroma ? getChromaColor(xPos, MyModConfig.fpsY) : hexToInt(MyModConfig.fpsColor);
-            fr.drawStringWithShadow(fpsText, xPos, MyModConfig.fpsY, color);
+            int color = MyModConfig.fpsChroma ? getChromaColor(xPos, yPos) : hexToInt(MyModConfig.fpsColor);
+            fr.drawStringWithShadow(fpsText, xPos, yPos, color);
         }
 
         // PING
@@ -52,57 +54,56 @@ public class HudRenderer {
                 String pingText = "Ping: " + ping + "ms";
                 int textWidth = fr.getStringWidth(pingText);
 
-                int xPos;
-                if (MyModConfig.pingRightAlign) {
-                    xPos = width - MyModConfig.pingX - textWidth;
-                } else {
-                    xPos = MyModConfig.pingX;
-                }
+                int xPos = MyModConfig.pingRightAlign
+                        ? screenWidth - MyModConfig.pingX - textWidth
+                        : MyModConfig.pingX;
+                int yPos = MyModConfig.pingBottomAlign
+                        ? screenHeight - MyModConfig.pingY - fr.FONT_HEIGHT
+                        : MyModConfig.pingY;
 
                 if (MyModConfig.pingBackground) {
-                    drawBackgroundBox(xPos - 2, MyModConfig.pingY - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+                    drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
                 }
 
-                int color = MyModConfig.pingChroma ? getChromaColor(xPos, MyModConfig.pingY) : hexToInt(MyModConfig.pingColor);
-                fr.drawStringWithShadow(pingText, xPos, MyModConfig.pingY, color);
+                int color = MyModConfig.pingChroma ? getChromaColor(xPos, yPos) : hexToInt(MyModConfig.pingColor);
+                fr.drawStringWithShadow(pingText, xPos, yPos, color);
             }
         }
 
         // CPS
-        if(MyModConfig.cpsEnabled) {
+        if (MyModConfig.cpsEnabled) {
             String cpsText = "CPS: " + CpsTracker.leftCps + "|" + CpsTracker.rightCps;
             int textWidth = fr.getStringWidth(cpsText);
 
-            int xPos;
-            if (MyModConfig.cpsRightAlign) {
-                xPos = width - MyModConfig.cpsX - textWidth;
-            } else {
-                xPos = MyModConfig.cpsX;
-            }
+            int xPos = MyModConfig.cpsRightAlign
+                    ? screenWidth - MyModConfig.cpsX - textWidth
+                    : MyModConfig.cpsX;
+            int yPos = MyModConfig.cpsBottomAlign
+                    ? screenHeight - MyModConfig.cpsY - fr.FONT_HEIGHT
+                    : MyModConfig.cpsY;
 
             if (MyModConfig.cpsBackground) {
-                drawBackgroundBox(xPos - 2, MyModConfig.cpsY - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+                drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
             }
 
-            int color = MyModConfig.cpsChroma ? getChromaColor(xPos, MyModConfig.cpsY) : hexToInt(MyModConfig.cpsColor);
-            fr.drawStringWithShadow(cpsText, xPos, MyModConfig.cpsY, color);
+            int color = MyModConfig.cpsChroma ? getChromaColor(xPos, yPos) : hexToInt(MyModConfig.cpsColor);
+            fr.drawStringWithShadow(cpsText, xPos, yPos, color);
         }
 
         // keystrokes
-        if(MyModConfig.keystrokesEnabled) {
+        if (MyModConfig.keystrokesEnabled) {
             int gap = 2;
             int boxSize = 18;
             int height = 18;
             int totalWidth = (boxSize * 3) + (gap * 2);
+            int totalHeight = (height * 5) + (gap * 4);
 
-            int xPos;
-            int yPos = MyModConfig.keystrokesY;
-
-            if (MyModConfig.keystrokesRightAlign) {
-                xPos = width - MyModConfig.keystrokesX - totalWidth;
-            } else {
-                xPos = MyModConfig.keystrokesX;
-            }
+            int xPos = MyModConfig.keystrokesRightAlign
+                    ? screenWidth - MyModConfig.keystrokesX - totalWidth
+                    : MyModConfig.keystrokesX;
+            int yPos = MyModConfig.keystrokesBottomAlign
+                    ? screenHeight - MyModConfig.keystrokesY - totalHeight
+                    : MyModConfig.keystrokesY;
 
             // W
             drawKey(fr, "W", xPos + boxSize + gap, yPos, boxSize, height, KeystrokesTracker.wPressed);
@@ -117,7 +118,8 @@ public class HudRenderer {
             int yRow3 = yRow2 + height + gap;
             int mouseWidth = (totalWidth - gap) / 2;
             drawKey(fr, "LMB", xPos, yRow3, mouseWidth, height, KeystrokesTracker.leftClickPressed());
-            drawKey(fr, "RMB", xPos + mouseWidth + gap, yRow3, mouseWidth, height, KeystrokesTracker.rightClickPressed());
+            drawKey(fr, "RMB", xPos + mouseWidth + gap, yRow3, mouseWidth, height,
+                    KeystrokesTracker.rightClickPressed());
 
             // Space
             int yRow4 = yRow3 + height + gap;
@@ -133,40 +135,44 @@ public class HudRenderer {
             Collection<PotionEffect> effects = mc.thePlayer.getActivePotionEffects();
 
             if (!effects.isEmpty()) {
-                int xPos = MyModConfig.potionHudX;
-                int yOffset = MyModConfig.potionHudY;
                 int baseColor = hexToInt(MyModConfig.potionHudColor);
                 int lineHeight = fr.FONT_HEIGHT + 2;
+                int totalListHeight = effects.size() * lineHeight;
 
-                if (MyModConfig.potionHudVerticalCenter) {
-                    int screenHeight = sr.getScaledHeight();
-                    int totalListHeight = effects.size() * lineHeight;
-                    yOffset = (screenHeight / 2) - (totalListHeight / 2);
-                }
+                int xPos = MyModConfig.potionHudRightAlign
+                        ? screenWidth - MyModConfig.potionHudX
+                        : MyModConfig.potionHudX;
+                int yOffset = MyModConfig.potionHudBottomAlign
+                        ? screenHeight - MyModConfig.potionHudY - totalListHeight
+                        : MyModConfig.potionHudY;
 
                 for (PotionEffect effect : effects) {
                     Potion potion = Potion.potionTypes[effect.getPotionID()];
                     String name = I18n.format(potion.getName());
                     if (effect.getAmplifier() == 1) {
                         name += " II";
-                    }
-                    else if (effect.getAmplifier() == 2) {
+                    } else if (effect.getAmplifier() == 2) {
                         name += " III";
-                    }
-                    else if (effect.getAmplifier() == 3) {
+                    } else if (effect.getAmplifier() == 3) {
                         name += " IV";
                     }
 
                     String duration = Potion.getDurationString(effect);
                     String displayText = name + ": " + duration;
 
-                    if (MyModConfig.potionHudBackground) {
-                        drawBackgroundBox(xPos - 2, yOffset - 1, fr.getStringWidth(displayText) + 4, fr.FONT_HEIGHT + 1);
+                    int drawX = xPos;
+                    if (MyModConfig.potionHudRightAlign) {
+                        drawX = xPos - fr.getStringWidth(displayText);
                     }
 
-                    int color = MyModConfig.potionHudChroma ? getChromaColor(xPos, yOffset) : baseColor;
+                    if (MyModConfig.potionHudBackground) {
+                        drawBackgroundBox(drawX - 2, yOffset - 1, fr.getStringWidth(displayText) + 4,
+                                fr.FONT_HEIGHT + 1);
+                    }
 
-                    fr.drawStringWithShadow(displayText, xPos, yOffset, color);
+                    int color = MyModConfig.potionHudChroma ? getChromaColor(drawX, yOffset) : baseColor;
+
+                    fr.drawStringWithShadow(displayText, drawX, yOffset, color);
                     yOffset += lineHeight;
                 }
             }
@@ -194,7 +200,11 @@ public class HudRenderer {
     }
 
     private int hexToInt(String hex) {
-        try { return Integer.parseInt(hex, 16); } catch (NumberFormatException e) { return 0xFFFFFF; }
+        try {
+            return Integer.parseInt(hex, 16);
+        } catch (NumberFormatException e) {
+            return 0xFFFFFF;
+        }
     }
 
     // chroma calc
