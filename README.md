@@ -37,6 +37,7 @@
 ## Screenshots
 
 ![Screenshot-1](src/main/resources/screenshot-1.png)
+![Screenshot-1-gif](src/main/resources/screenshot-1.gif)
 ![Screenshot-2](src/main/resources/screenshot-2.png)
 ![Screenshot-3](src/main/resources/screenshot-3.png)
 ![Screenshot-4](src/main/resources/screenshot-4.png)
