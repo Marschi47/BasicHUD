@@ -43,7 +43,7 @@ public class HudRenderer {
                 drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
             }
 
-            int color = MyModConfig.fpsChroma ? getChromaColor(xPos, yPos) : hexToInt(MyModConfig.fpsColor);
+            int color = MyModConfig.fpsChroma ? getChromaColor(xPos, yPos) : MyModConfig.fpsColorInt;
             fr.drawStringWithShadow(fpsText, xPos, yPos, color);
         }
 
@@ -65,7 +65,7 @@ public class HudRenderer {
                     drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
                 }
 
-                int color = MyModConfig.pingChroma ? getChromaColor(xPos, yPos) : hexToInt(MyModConfig.pingColor);
+                int color = MyModConfig.pingChroma ? getChromaColor(xPos, yPos) : MyModConfig.pingColorInt;
                 fr.drawStringWithShadow(pingText, xPos, yPos, color);
             }
         }
@@ -86,7 +86,7 @@ public class HudRenderer {
                 drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
             }
 
-            int color = MyModConfig.cpsChroma ? getChromaColor(xPos, yPos) : hexToInt(MyModConfig.cpsColor);
+            int color = MyModConfig.cpsChroma ? getChromaColor(xPos, yPos) : MyModConfig.cpsColorInt;
             fr.drawStringWithShadow(cpsText, xPos, yPos, color);
         }
 
@@ -135,7 +135,7 @@ public class HudRenderer {
             Collection<PotionEffect> effects = mc.thePlayer.getActivePotionEffects();
 
             if (!effects.isEmpty()) {
-                int baseColor = hexToInt(MyModConfig.potionHudColor);
+                int baseColor = MyModConfig.potionHudColorInt;
                 int lineHeight = fr.FONT_HEIGHT + 2;
                 int totalListHeight = effects.size() * lineHeight;
 
@@ -186,25 +186,17 @@ public class HudRenderer {
 
         int color;
         if (pressed) {
-            color = hexToInt(MyModConfig.keystrokesActivatedColor);
+            color = MyModConfig.keystrokesActivatedColorInt;
         } else if (MyModConfig.keystrokesChroma) {
             color = getChromaColor(x, y);
         } else {
-            color = hexToInt(MyModConfig.keystrokesColor);
+            color = MyModConfig.keystrokesColorInt;
         }
 
         int textX = x + (width - fr.getStringWidth(text)) / 2;
         int textY = y + (height - fr.FONT_HEIGHT) / 2 + 1;
 
         fr.drawStringWithShadow(text, textX, textY, color);
-    }
-
-    private int hexToInt(String hex) {
-        try {
-            return Integer.parseInt(hex, 16);
-        } catch (NumberFormatException e) {
-            return 0xFFFFFF;
-        }
     }
 
     // chroma calc

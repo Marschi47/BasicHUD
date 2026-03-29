@@ -15,6 +15,7 @@ public class MyModConfig {
         public static String fpsColor = "FFFFFF";
         public static boolean fpsChroma = false;
         public static boolean fpsBackground = false;
+        public static int fpsColorInt = 0xFFFFFF;
 
         // Ping Settings
         public static boolean pingEnabled = true;
@@ -25,6 +26,7 @@ public class MyModConfig {
         public static String pingColor = "FFFFFF";
         public static boolean pingChroma = false;
         public static boolean pingBackground = false;
+        public static int pingColorInt = 0xFFFFFF;
 
         // CPS Settings
         public static boolean cpsEnabled = true;
@@ -35,6 +37,7 @@ public class MyModConfig {
         public static String cpsColor = "FFFFFF";
         public static boolean cpsChroma = false;
         public static boolean cpsBackground = false;
+        public static int cpsColorInt = 0xFFFFFF;
 
         // keystrokes settings
         public static boolean keystrokesEnabled = true;
@@ -46,6 +49,8 @@ public class MyModConfig {
         public static String keystrokesActivatedColor = "00FF00";
         public static boolean keystrokesChroma = false;
         public static boolean keystrokesBackground = false;
+        public static int keystrokesColorInt = 0xFFFFFF;
+        public static int keystrokesActivatedColorInt = 0x00FF00;
 
         // potion settings
         public static boolean potionHudEnabled = true;
@@ -56,6 +61,7 @@ public class MyModConfig {
         public static String potionHudColor = "FFFFFF";
         public static boolean potionHudChroma = false;
         public static boolean potionHudBackground = false;
+        public static int potionHudColorInt = 0xFFFFFF;
 
         public static void init(File configFile) {
                 config = new Configuration(configFile);
@@ -134,6 +140,13 @@ public class MyModConfig {
                                         "Enable RGB/Chroma Effect");
                         potionHudBackground = config.getBoolean("potionHudBackground", "HUD_POTIONS", false,
                                         "Enable Background");
+
+                        fpsColorInt = safeHexToInt(fpsColor);
+                        pingColorInt = safeHexToInt(pingColor);
+                        cpsColorInt = safeHexToInt(cpsColor);
+                        keystrokesColorInt = safeHexToInt(keystrokesColor);
+                        keystrokesActivatedColorInt = safeHexToInt(keystrokesActivatedColor);
+                        potionHudColorInt = safeHexToInt(potionHudColor);
                 } catch (Exception e) {
                         System.err.println("Error loading config: " + e.getMessage());
                 } finally {
@@ -196,6 +209,13 @@ public class MyModConfig {
                 potionHudChroma = false;
                 potionHudBackground = false;
 
+                fpsColorInt = safeHexToInt(fpsColor);
+                pingColorInt = safeHexToInt(pingColor);
+                cpsColorInt = safeHexToInt(cpsColor);
+                keystrokesColorInt = safeHexToInt(keystrokesColor);
+                keystrokesActivatedColorInt = safeHexToInt(keystrokesActivatedColor);
+                potionHudColorInt = safeHexToInt(potionHudColor);
+
                 // Remove all categories and re-save with defaults
                 config.removeCategory(config.getCategory("hud_fps"));
                 config.removeCategory(config.getCategory("hud_ping"));
@@ -206,5 +226,13 @@ public class MyModConfig {
 
                 // Re-load to recreate config entries with defaults
                 loadConfig();
+        }
+
+        private static int safeHexToInt(String hex) {
+                try {
+                        return Integer.parseInt(hex, 16);
+                } catch (NumberFormatException e) {
+                        return 0xFFFFFF;
+                }
         }
 }
