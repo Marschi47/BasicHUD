@@ -1,9 +1,13 @@
 package com.github.marschi47.basichud;
 
+import com.github.marschi47.basichud.elements.HudElement;
+import com.github.marschi47.basichud.elements.HudElementRegistry;
+import com.github.marschi47.basichud.elements.KeystrokesElement;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiTextField;
 import net.minecraft.client.gui.Gui;
+
 import java.io.IOException;
 
 public class SettingsGui extends GuiScreen {
@@ -21,6 +25,11 @@ public class SettingsGui extends GuiScreen {
         this.parentScreen = parentScreen;
     }
 
+    // --- Helper to look up elements by ID ---
+    private HudElement el(String id) {
+        return HudElementRegistry.getById(id);
+    }
+
     @Override
     public void initGui() {
         super.initGui();
@@ -31,53 +40,59 @@ public class SettingsGui extends GuiScreen {
         int btnH = 20;
         int gap = 24;
 
+        HudElement fps = el("fps");
+        HudElement ping = el("ping");
+        HudElement cps = el("cps");
+        HudElement keystrokes = el("keystrokes");
+        HudElement potionHud = el("potionHud");
+
         // FPS (left column)
         int y = 40;
-        this.buttonList.add(new GuiToggleButton(1, col1, y, btnW, btnH, "Show FPS", MyModConfig.fpsEnabled));
+        this.buttonList.add(new GuiToggleButton(1, col1, y, btnW, btnH, "Show FPS", fps.enabled));
         this.buttonList
-                .add(new GuiToggleButton(12, col1, y + gap, btnW, btnH, "FPS Background", MyModConfig.fpsBackground));
+                .add(new GuiToggleButton(12, col1, y + gap, btnW, btnH, "FPS Background", fps.background));
         this.buttonList
-                .add(new GuiToggleButton(13, col1, y + gap * 2, btnW, btnH, "FPS Chroma", MyModConfig.fpsChroma));
-        fpsColorField = createColorField(col1, y + gap * 3, btnW, btnH, MyModConfig.fpsColor);
+                .add(new GuiToggleButton(13, col1, y + gap * 2, btnW, btnH, "FPS Chroma", fps.chroma));
+        fpsColorField = createColorField(col1, y + gap * 3, btnW, btnH, fps.color);
 
         // Ping (right column)
-        this.buttonList.add(new GuiToggleButton(2, col2, y, btnW, btnH, "Show Ping", MyModConfig.pingEnabled));
+        this.buttonList.add(new GuiToggleButton(2, col2, y, btnW, btnH, "Show Ping", ping.enabled));
         this.buttonList
-                .add(new GuiToggleButton(22, col2, y + gap, btnW, btnH, "Ping Background", MyModConfig.pingBackground));
+                .add(new GuiToggleButton(22, col2, y + gap, btnW, btnH, "Ping Background", ping.background));
         this.buttonList
-                .add(new GuiToggleButton(23, col2, y + gap * 2, btnW, btnH, "Ping Chroma", MyModConfig.pingChroma));
-        pingColorField = createColorField(col2, y + gap * 3, btnW, btnH, MyModConfig.pingColor);
+                .add(new GuiToggleButton(23, col2, y + gap * 2, btnW, btnH, "Ping Chroma", ping.chroma));
+        pingColorField = createColorField(col2, y + gap * 3, btnW, btnH, ping.color);
 
         // CPS (left column, second block)
         int y2 = y + gap * 5;
-        this.buttonList.add(new GuiToggleButton(3, col1, y2, btnW, btnH, "Show CPS", MyModConfig.cpsEnabled));
+        this.buttonList.add(new GuiToggleButton(3, col1, y2, btnW, btnH, "Show CPS", cps.enabled));
         this.buttonList
-                .add(new GuiToggleButton(32, col1, y2 + gap, btnW, btnH, "CPS Background", MyModConfig.cpsBackground));
+                .add(new GuiToggleButton(32, col1, y2 + gap, btnW, btnH, "CPS Background", cps.background));
         this.buttonList
-                .add(new GuiToggleButton(33, col1, y2 + gap * 2, btnW, btnH, "CPS Chroma", MyModConfig.cpsChroma));
-        cpsColorField = createColorField(col1, y2 + gap * 3, btnW, btnH, MyModConfig.cpsColor);
+                .add(new GuiToggleButton(33, col1, y2 + gap * 2, btnW, btnH, "CPS Chroma", cps.chroma));
+        cpsColorField = createColorField(col1, y2 + gap * 3, btnW, btnH, cps.color);
 
         // Keystrokes (right column, second block)
         this.buttonList
-                .add(new GuiToggleButton(4, col2, y2, btnW, btnH, "Show Keystrokes", MyModConfig.keystrokesEnabled));
+                .add(new GuiToggleButton(4, col2, y2, btnW, btnH, "Show Keystrokes", keystrokes.enabled));
         this.buttonList.add(new GuiToggleButton(42, col2, y2 + gap, btnW, btnH, "Keystrokes Background",
-                MyModConfig.keystrokesBackground));
+                keystrokes.background));
         this.buttonList.add(new GuiToggleButton(43, col2, y2 + gap * 2, btnW, btnH, "Keystrokes Chroma",
-                MyModConfig.keystrokesChroma));
-        keystrokesColorField = createColorField(col2, y2 + gap * 3, btnW, btnH, MyModConfig.keystrokesColor);
+                keystrokes.chroma));
+        keystrokesColorField = createColorField(col2, y2 + gap * 3, btnW, btnH, keystrokes.color);
         keystrokesActivatedColorField = createColorField(col2, y2 + gap * 4, btnW, btnH,
-                MyModConfig.keystrokesActivatedColor);
+                ((KeystrokesElement) keystrokes).activatedColor);
 
         // Potion HUD (centered, third block)
         int y3 = y2 + gap * 6;
         int potCenterX = centerX - 100;
         this.buttonList.add(
-                new GuiToggleButton(5, potCenterX, y3, btnW, btnH, "Show Potion HUD", MyModConfig.potionHudEnabled));
+                new GuiToggleButton(5, potCenterX, y3, btnW, btnH, "Show Potion HUD", potionHud.enabled));
         this.buttonList.add(new GuiToggleButton(52, potCenterX, y3 + gap, btnW, btnH, "Potion HUD Background",
-                MyModConfig.potionHudBackground));
+                potionHud.background));
         this.buttonList.add(new GuiToggleButton(53, potCenterX, y3 + gap * 2, btnW, btnH, "Potion HUD Chroma",
-                MyModConfig.potionHudChroma));
-        potionHudColorField = createColorField(potCenterX, y3 + gap * 3, btnW, btnH, MyModConfig.potionHudColor);
+                potionHud.chroma));
+        potionHudColorField = createColorField(potCenterX, y3 + gap * 3, btnW, btnH, potionHud.color);
 
         // Bottom Buttons
         this.buttonList.add(new GuiButton(100, centerX - 205, this.height - 30, 200, 20, "Back to Position Editor"));
@@ -196,41 +211,39 @@ public class SettingsGui extends GuiScreen {
     }
 
     private void saveAllColors() {
-        saveColor("HUD_FPS", "fpsColor", fpsColorField.getText(), MyModConfig.fpsColor, (val) -> {
-            MyModConfig.fpsColor = val;
-            MyModConfig.fpsColorInt = Integer.parseInt(val, 16);
-        });
-        saveColor("HUD_PING", "pingColor", pingColorField.getText(), MyModConfig.pingColor, (val) -> {
-            MyModConfig.pingColor = val;
-            MyModConfig.pingColorInt = Integer.parseInt(val, 16);
-        });
-        saveColor("HUD_CPS", "cpsColor", cpsColorField.getText(), MyModConfig.cpsColor, (val) -> {
-            MyModConfig.cpsColor = val;
-            MyModConfig.cpsColorInt = Integer.parseInt(val, 16);
-        });
-        saveColor("HUD_Keystrokes", "keystrokesColor", keystrokesColorField.getText(), MyModConfig.keystrokesColor,
-                (val) -> {
-                    MyModConfig.keystrokesColor = val;
-                    MyModConfig.keystrokesColorInt = Integer.parseInt(val, 16);
-                });
-        saveColor("HUD_Keystrokes", "keystrokesActivatedColor", keystrokesActivatedColorField.getText(),
-                MyModConfig.keystrokesActivatedColor, (val) -> {
-                    MyModConfig.keystrokesActivatedColor = val;
-                    MyModConfig.keystrokesActivatedColorInt = Integer.parseInt(val, 16);
-                });
-        saveColor("HUD_POTIONS", "potionHudColor", potionHudColorField.getText(), MyModConfig.potionHudColor, (val) -> {
-            MyModConfig.potionHudColor = val;
-            MyModConfig.potionHudColorInt = Integer.parseInt(val, 16);
-        });
+        HudElement fps = el("fps");
+        HudElement ping = el("ping");
+        HudElement cps = el("cps");
+        KeystrokesElement keystrokes = (KeystrokesElement) el("keystrokes");
+        HudElement potionHud = el("potionHud");
+
+        saveColor(fps, fpsColorField.getText());
+        saveColor(ping, pingColorField.getText());
+        saveColor(cps, cpsColorField.getText());
+        saveColor(keystrokes, keystrokesColorField.getText());
+
+        // Keystrokes activated color
+        String activatedHex = keystrokesActivatedColorField.getText().toUpperCase();
+        if (activatedHex.length() == 6 && activatedHex.matches("[0-9A-F]{6}")
+                && !activatedHex.equals(keystrokes.activatedColor)) {
+            keystrokes.activatedColor = activatedHex;
+            keystrokes.activatedColorInt = Integer.parseInt(activatedHex, 16);
+        }
+
+        saveColor(potionHud, potionHudColorField.getText());
+
+        // Save all elements to config
+        for (HudElement element : HudElementRegistry.getElements()) {
+            element.saveToConfig(MyModConfig.config);
+        }
         MyModConfig.config.save();
     }
 
-    private void saveColor(String category, String key, String newValue, String currentValue,
-            java.util.function.Consumer<String> applier) {
+    private void saveColor(HudElement element, String newValue) {
         String upper = newValue.toUpperCase();
-        if (upper.length() == 6 && upper.matches("[0-9A-F]{6}") && !upper.equals(currentValue)) {
-            applier.accept(upper);
-            MyModConfig.config.get(category, key, "FFFFFF").set(upper);
+        if (upper.length() == 6 && upper.matches("[0-9A-F]{6}") && !upper.equals(element.color)) {
+            element.color = upper;
+            element.colorInt = Integer.parseInt(upper, 16);
         }
     }
 
@@ -240,74 +253,69 @@ public class SettingsGui extends GuiScreen {
             GuiToggleButton toggle = (GuiToggleButton) button;
             toggle.toggle();
 
+            HudElement fps = el("fps");
+            HudElement ping = el("ping");
+            HudElement cps = el("cps");
+            HudElement keystrokes = el("keystrokes");
+            HudElement potionHud = el("potionHud");
+
             switch (button.id) {
                 // FPS
                 case 1:
-                    MyModConfig.fpsEnabled = toggle.state;
-                    save("HUD_FPS", "fpsEnabled", true, toggle.state);
+                    fps.enabled = toggle.state;
                     break;
                 case 12:
-                    MyModConfig.fpsBackground = toggle.state;
-                    save("HUD_FPS", "fpsBackground", false, toggle.state);
+                    fps.background = toggle.state;
                     break;
                 case 13:
-                    MyModConfig.fpsChroma = toggle.state;
-                    save("HUD_FPS", "fpsChroma", false, toggle.state);
+                    fps.chroma = toggle.state;
                     break;
                 // Ping
                 case 2:
-                    MyModConfig.pingEnabled = toggle.state;
-                    save("HUD_PING", "pingEnabled", true, toggle.state);
+                    ping.enabled = toggle.state;
                     break;
                 case 22:
-                    MyModConfig.pingBackground = toggle.state;
-                    save("HUD_PING", "pingBackground", false, toggle.state);
+                    ping.background = toggle.state;
                     break;
                 case 23:
-                    MyModConfig.pingChroma = toggle.state;
-                    save("HUD_PING", "pingChroma", false, toggle.state);
+                    ping.chroma = toggle.state;
                     break;
                 // CPS
                 case 3:
-                    MyModConfig.cpsEnabled = toggle.state;
-                    save("HUD_CPS", "cpsEnabled", true, toggle.state);
+                    cps.enabled = toggle.state;
                     break;
                 case 32:
-                    MyModConfig.cpsBackground = toggle.state;
-                    save("HUD_CPS", "cpsBackground", false, toggle.state);
+                    cps.background = toggle.state;
                     break;
                 case 33:
-                    MyModConfig.cpsChroma = toggle.state;
-                    save("HUD_CPS", "cpsChroma", false, toggle.state);
+                    cps.chroma = toggle.state;
                     break;
                 // Keystrokes
                 case 4:
-                    MyModConfig.keystrokesEnabled = toggle.state;
-                    save("HUD_Keystrokes", "KeystrokesEnabled", true, toggle.state);
+                    keystrokes.enabled = toggle.state;
                     break;
                 case 42:
-                    MyModConfig.keystrokesBackground = toggle.state;
-                    save("HUD_Keystrokes", "keystrokesBackground", false, toggle.state);
+                    keystrokes.background = toggle.state;
                     break;
                 case 43:
-                    MyModConfig.keystrokesChroma = toggle.state;
-                    save("HUD_Keystrokes", "keystrokesChroma", false, toggle.state);
+                    keystrokes.chroma = toggle.state;
                     break;
                 // Potion HUD
                 case 5:
-                    MyModConfig.potionHudEnabled = toggle.state;
-                    save("HUD_POTIONS", "potionHudEnabled", true, toggle.state);
+                    potionHud.enabled = toggle.state;
                     break;
                 case 52:
-                    MyModConfig.potionHudBackground = toggle.state;
-                    save("HUD_POTIONS", "potionHudBackground", false, toggle.state);
+                    potionHud.background = toggle.state;
                     break;
                 case 53:
-                    MyModConfig.potionHudChroma = toggle.state;
-                    save("HUD_POTIONS", "potionHudChroma", false, toggle.state);
+                    potionHud.chroma = toggle.state;
                     break;
             }
 
+            // Save the modified element's config
+            for (HudElement element : HudElementRegistry.getElements()) {
+                element.saveToConfig(MyModConfig.config);
+            }
             MyModConfig.config.save();
         }
 
@@ -320,9 +328,5 @@ public class SettingsGui extends GuiScreen {
             MyModConfig.resetToDefaults();
             mc.displayGuiScreen(new SettingsGui(parentScreen));
         }
-    }
-
-    private void save(String category, String key, boolean defaultVal, boolean value) {
-        MyModConfig.config.get(category, key, defaultVal).set(value);
     }
 }
