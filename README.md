@@ -1,4 +1,4 @@
-![BasicHUD Logo](src/main/resources/BasicHUD.png)
+![BasicHUD Logo](images/BasicHUD.png)
 # BasicHUD
 
 **BasicHUD** is a Forge mod for Minecraft 1.8.9 that displays basic information as a customizable HUD.
@@ -36,11 +36,11 @@
 
 ## Screenshots
 
-![Screenshot-1](src/main/resources/screenshot-1.png)
-![Screenshot-1-gif](src/main/resources/screenshot-1.gif)
-![Screenshot-2](src/main/resources/screenshot-2.png)
-![Screenshot-3](src/main/resources/screenshot-3.png)
-![Screenshot-4](src/main/resources/screenshot-4.png)
+![Screenshot-1](images/screenshot-1.png)
+![Screenshot-1-gif](images/screenshot-1.gif)
+![Screenshot-2](images/screenshot-2.png)
+![Screenshot-3](images/screenshot-3.png)
+![Screenshot-4](images/screenshot-4.png)
 
 ## Building from Source
 
