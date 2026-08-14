@@ -9,6 +9,14 @@
 * **Customization:** Fully configurable position, text colors (incl. RGB/Chroma), background and on/off toggle.
 * **GUI:** Built-in config menu (default Shortcut: K) for easy adjustments with Drag and Drop to change the Position.
 
+## Screenshots
+
+![Screenshot-1](images/screenshot-1.png)
+![Screenshot-1-gif](images/screenshot-1.gif)
+![Screenshot-2](images/screenshot-2.png)
+![Screenshot-3](images/screenshot-3.png)
+![Screenshot-4](images/screenshot-4.png)
+
 ## Installation
 
 #### Download jar file manually
@@ -33,14 +41,6 @@
 
 * The HUD appears automatically when you join a world or server.
 * **To edit settings:** Press K to open the config, there you can edit the position (Drag and Drop) and more settings (Open more settings button) of the HUD Elements.
-
-## Screenshots
-
-![Screenshot-1](images/screenshot-1.png)
-![Screenshot-1-gif](images/screenshot-1.gif)
-![Screenshot-2](images/screenshot-2.png)
-![Screenshot-3](images/screenshot-3.png)
-![Screenshot-4](images/screenshot-4.png)
 
 ## Building from Source
 
