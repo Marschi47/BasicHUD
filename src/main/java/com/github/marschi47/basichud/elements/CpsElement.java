@@ -54,6 +54,6 @@ public class CpsElement extends HudElement {
 
     @Override
     public void renderPreview(FontRenderer fr, int drawX, int drawY) {
-        fr.drawStringWithShadow("CPS: 12|12", drawX, drawY, 0xFFFFFF);
+        fr.drawStringWithShadow("CPS: 0|0", drawX, drawY, 0xFFFFFF);
     }
 }
