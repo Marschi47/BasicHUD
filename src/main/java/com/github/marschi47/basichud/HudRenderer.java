@@ -14,7 +14,7 @@ public class HudRenderer {
     public void onRenderOverlay(RenderGameOverlayEvent.Text event) {
         Minecraft mc = Minecraft.getMinecraft();
         FontRenderer fr = mc.fontRendererObj;
-        ScaledResolution sr = new ScaledResolution(mc);
+        ScaledResolution sr = event.resolution;
         int screenWidth = sr.getScaledWidth();
         int screenHeight = sr.getScaledHeight();
 
