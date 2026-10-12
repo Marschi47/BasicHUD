@@ -87,7 +87,7 @@ public abstract class HudElement {
     public int getChromaColor(int px, int py) {
         long speed = 2000;
         float hue = (float) ((System.currentTimeMillis() + (px + py) * 10) % speed) / speed;
-        return Color.getHSBColor(hue, 1.0f, 1.0f).getRGB();
+        return Color.HSBtoRGB(hue, 1.0f, 1.0f);
     }
 
     public void drawBackgroundBox(int bx, int by, int width, int height) {
