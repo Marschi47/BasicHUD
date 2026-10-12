@@ -6,6 +6,11 @@ import net.minecraft.client.network.NetHandlerPlayClient;
 
 public class PingElement extends HudElement {
 
+    private int lastPing = -1;
+    private String cachedPingText = "Ping: 0ms";
+    private int cachedTextWidth = -1;
+    private long lastPingUpdateTime = 0;
+
     public PingElement() {
         super("ping", "HUD_PING",
                 true, 10, 22,
@@ -15,8 +20,11 @@ public class PingElement extends HudElement {
 
     @Override
     public int getWidth() {
-        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
-        return fr.getStringWidth("Ping: 20ms");
+        if (cachedTextWidth == -1) {
+            FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+            cachedTextWidth = fr.getStringWidth(cachedPingText);
+        }
+        return cachedTextWidth;
     }
 
     @Override
@@ -26,20 +34,27 @@ public class PingElement extends HudElement {
 
     @Override
     public void render(FontRenderer fr, int drawX, int drawY, int screenWidth, int screenHeight) {
-        int ping = getPlayerPing();
-        if (ping > 0) {
-            String pingText = "Ping: " + ping + "ms";
-            int textWidth = fr.getStringWidth(pingText);
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastPingUpdateTime >= 1000) {
+            lastPingUpdateTime = currentTime;
+            int ping = getPlayerPing();
+            if (ping != lastPing || cachedTextWidth == -1) {
+                lastPing = ping;
+                cachedPingText = "Ping: " + lastPing + "ms";
+                cachedTextWidth = fr.getStringWidth(cachedPingText);
+            }
+        }
 
-            int xPos = rightAlign ? screenWidth - x - textWidth : x;
+        if (lastPing > 0) {
+            int xPos = rightAlign ? screenWidth - x - cachedTextWidth : x;
             int yPos = bottomAlign ? screenHeight - y - fr.FONT_HEIGHT : y;
 
             if (background) {
-                drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+                drawBackgroundBox(xPos - 2, yPos - 2, cachedTextWidth + 4, fr.FONT_HEIGHT + 3);
             }
 
             int color = chroma ? getChromaColor(xPos, yPos) : colorInt;
-            fr.drawStringWithShadow(pingText, xPos, yPos, color);
+            fr.drawStringWithShadow(cachedPingText, xPos, yPos, color);
         }
     }
 

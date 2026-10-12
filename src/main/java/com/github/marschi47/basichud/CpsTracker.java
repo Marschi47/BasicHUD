@@ -2,16 +2,22 @@ package com.github.marschi47.basichud;
 
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
-import java.util.ArrayDeque;
-import java.util.Queue;
 
 public class CpsTracker {
 
     // final cps count
     public static int leftCps = 0;
     public static int rightCps = 0;
-    private static final Queue<Long> rCLICKS = new ArrayDeque<>();
-    private static final Queue<Long> lCLICKS = new ArrayDeque<>();
+
+    private static final int BUFFER_SIZE = 100;
+    private static final long[] lClicks = new long[BUFFER_SIZE];
+    private static final long[] rClicks = new long[BUFFER_SIZE];
+    private static int lHead = 0;
+    private static int lTail = 0;
+    private static int lCount = 0;
+    private static int rHead = 0;
+    private static int rTail = 0;
+    private static int rCount = 0;
 
     @SubscribeEvent
     public void onClientTick(TickEvent.ClientTickEvent event) {
@@ -20,26 +26,40 @@ public class CpsTracker {
 
             // if click add to queue
             if (MouseInputHandler.leftClickedThisTick) {
-                lCLICKS.add(currentTime);
+                if (lCount == BUFFER_SIZE) {
+                    lHead = (lHead + 1) % BUFFER_SIZE;
+                    lCount--;
+                }
+                lClicks[lTail] = currentTime;
+                lTail = (lTail + 1) % BUFFER_SIZE;
+                lCount++;
                 MouseInputHandler.leftClickedThisTick = false; // reset flag
             }
             if (MouseInputHandler.rightClickedThisTick) {
-                rCLICKS.add(currentTime);
+                if (rCount == BUFFER_SIZE) {
+                    rHead = (rHead + 1) % BUFFER_SIZE;
+                    rCount--;
+                }
+                rClicks[rTail] = currentTime;
+                rTail = (rTail + 1) % BUFFER_SIZE;
+                rCount++;
                 MouseInputHandler.rightClickedThisTick = false; // reset flag
             }
 
             // older than 1 sec gets removed
-            while (!lCLICKS.isEmpty() && lCLICKS.peek() < currentTime - 1000) {
-                lCLICKS.poll();
+            while (lCount > 0 && lClicks[lHead] < currentTime - 1000) {
+                lHead = (lHead + 1) % BUFFER_SIZE;
+                lCount--;
             }
 
-            while (!rCLICKS.isEmpty() && rCLICKS.peek() < currentTime - 1000) {
-                rCLICKS.poll();
+            while (rCount > 0 && rClicks[rHead] < currentTime - 1000) {
+                rHead = (rHead + 1) % BUFFER_SIZE;
+                rCount--;
             }
 
             // set final count
-            leftCps = lCLICKS.size();
-            rightCps = rCLICKS.size();
+            leftCps = lCount;
+            rightCps = rCount;
         }
     }
 }

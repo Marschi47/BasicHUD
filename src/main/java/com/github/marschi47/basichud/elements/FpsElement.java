@@ -5,6 +5,10 @@ import net.minecraft.client.gui.FontRenderer;
 
 public class FpsElement extends HudElement {
 
+    private int lastFps = -1;
+    private String cachedFpsText = "FPS: 0";
+    private int cachedTextWidth = -1;
+
     public FpsElement() {
         super("fps", "HUD_FPS",
                 true, 10, 10,
@@ -14,8 +18,11 @@ public class FpsElement extends HudElement {
 
     @Override
     public int getWidth() {
-        FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
-        return fr.getStringWidth("FPS: 144");
+        if (cachedTextWidth == -1) {
+            FontRenderer fr = Minecraft.getMinecraft().fontRendererObj;
+            cachedTextWidth = fr.getStringWidth(cachedFpsText);
+        }
+        return cachedTextWidth;
     }
 
     @Override
@@ -26,18 +33,21 @@ public class FpsElement extends HudElement {
     @Override
     public void render(FontRenderer fr, int drawX, int drawY, int screenWidth, int screenHeight) {
         int fps = Minecraft.getDebugFPS();
-        String fpsText = "FPS: " + fps;
-        int textWidth = fr.getStringWidth(fpsText);
+        if (fps != lastFps || cachedTextWidth == -1) {
+            lastFps = fps;
+            cachedFpsText = "FPS: " + lastFps;
+            cachedTextWidth = fr.getStringWidth(cachedFpsText);
+        }
 
-        int xPos = rightAlign ? screenWidth - x - textWidth : x;
+        int xPos = rightAlign ? screenWidth - x - cachedTextWidth : x;
         int yPos = bottomAlign ? screenHeight - y - fr.FONT_HEIGHT : y;
 
         if (background) {
-            drawBackgroundBox(xPos - 2, yPos - 2, textWidth + 4, fr.FONT_HEIGHT + 3);
+            drawBackgroundBox(xPos - 2, yPos - 2, cachedTextWidth + 4, fr.FONT_HEIGHT + 3);
         }
 
         int color = chroma ? getChromaColor(xPos, yPos) : colorInt;
-        fr.drawStringWithShadow(fpsText, xPos, yPos, color);
+        fr.drawStringWithShadow(cachedFpsText, xPos, yPos, color);
     }
 
     @Override
